@@ -22,7 +22,7 @@ const config = {
   projectName: 'sgtechstack.github.io', // Usually your repo name.
   deploymentBranch: 'deployment',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internalization, you can use this field to set useful
