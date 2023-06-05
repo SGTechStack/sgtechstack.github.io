@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-The Pagination-Query React library simplifies backend pagination queries in React applications by providing an abstraction layer on top of the @tanstack/react-query library. It seamlessly integrates with @tanstack/react-query and axios for efficient backend calls, managing page numbers, sizes and sorting.
+The Pagination-Query React library simplifies backend pagination queries in React applications by providing an abstraction layer on top of the `@tanstack/react-query` library. It seamlessly integrates with `@tanstack/react-query` and `axios` for efficient backend calls, managing page numbers, sizes and sorting.
 
 ## Get Started
 
