@@ -7,15 +7,15 @@ sidebar_position: 1
 ```
 const { 
     isLoading,
-    isError,
     isSuccess,
     status,
-    error,
     data,
+    error,
+    isError,
     refetch,
     isFetching
 } = usePaginatedQuery<T>({
-    path,
+    url,
     page,
     size,
     sort,
@@ -30,26 +30,26 @@ const {
     - The server URL that will be used for the request
 - `page: number`
     - **Required**
-    - 0 indexed
-    - Defaults to 0
+    - `0` indexed
+    - Defaults to `0`
     - The page number to access
 - `size: number`
     - **Required**
-    - Defaults to 20
+    - Defaults to `20`
     - The page size requested
 - `sort: String`
     - **Optional**
     - A collection of sort directives in the format `($propertyname,)+[asc|desc]?.`
 - `staleTime: number | Infinity`
     - **Optional**
-    - Defaults to 0
+    - Defaults to `0`
     - The time in milliseconds after data is considered stale. This value only applies to the hook it is defined on.
-    - If set to Infinity, the data will never be considered stale
+    - If set to `Infinity`, the data will never be considered stale
 - `gcTime: number | Infinity`
     - **Optional**
-    - Defaults to 5 * 60 * 1000 (5 minutes) or Infinity during SSR
+    - Defaults to `5 * 60 * 1000` (5 minutes) or `Infinity` during SSR
     - The time in milliseconds that unused/inactive cache data remains in memory. When a query's cache becomes unused or inactive, that cache data will be garbage collected after this duration. When different garbage collection times are specified, the longest one will be used.
-    - If set to Infinity, will disable garbage collection
+    - If set to `Infinity`, will disable garbage collection
 - `axiosConfig: AxiosRequestConfig`
     - **Optional**
 

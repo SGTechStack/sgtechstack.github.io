@@ -7,20 +7,20 @@ sidebar_position: 2
 ```
 const { 
     isLoading,
-    isError,
     isSuccess,
     status,
-    error,
     data,
-    fetchPreviousPage,
-    fetchNextPage,
+    error,
+    isError,
     hasPreviousPage,
     hasNextPage,
+    fetchPreviousPage,
+    fetchNextPage,
     isFetching,
     isFetchingPreviousPage,
     isFetchingNextPage
 } = usePaginatedQuery<T>({
-    path,
+    url,
     size,
     sort,
     defaultPageParam,
@@ -34,11 +34,6 @@ const {
 - `url: String`
     - **Required**
     - The server URL that will be used for the request
-- `page: number`
-    - **Required**
-    - `0` indexed
-    - Defaults to `0`
-    - The page number to access
 - `size: number`
     - **Required**
     - Defaults to `20`
