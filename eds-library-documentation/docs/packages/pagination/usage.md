@@ -2,21 +2,20 @@
 sidebar_position: 2
 ---
 
-# Steps
+# Usage
 
 Follow the steps below to use the Pagination-Query React library in your project:
 
 ## Importing the library
-Import the usePaginationQuery and useInfinitePaginationQuery functions from the @eds-component/pagination-query library:
-
+Import the `usePaginationQuery` and `useInfinitePaginationQuery` functions from the `@eds-component/pagination-query`library:
 ```
 import { usePaginationQuery, useInfinitePaginationQuery } from '@eds-component/pagination-query'
 ```
 
 ## Backend Configuration
-For the backend, we recommend using Spring Boot with the Spring Data REST library. Here's how you can configure it to generate the desired URL format:
+For the backend setup, we recommend using Spring Boot with the Spring Data REST library. Configure it as follows to generate the desired URL format:
 
-1. Create a repository interface that extends PagingAndSortingRepository:
+1. Create a repository interface that extends `PagingAndSortingRepository`:
 ```
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -27,33 +26,38 @@ public interface RecordsRepository extends PagingAndSortingRepository<Record, Lo
 }
 ```
 
-2. Make sure to annotate the repository with @RepositoryRestResource and provide the desired collectionResourceRel and path values. In our case, we use "records" as both the collectionResourceRel and path values.
+2. Annotate the repository with `@RepositoryRestResource` and provide the desired `collectionResourceRel` and `path` values. In this example, we use "records" for both.
 
-3. With this configuration, Spring Data REST will automatically generate the desired URL format. For example, the URL http://localhost:8080/records?page=0&size=2&sort=age,asc will return the first page of records, sorted by the age field in ascending order.
+3. With this configuration, Spring Data REST will automatically generate the expected URL format. For instance, the URL `http://localhost:8080/records?page=0&size=2&sort=age,asc` will retrieve the first page of records, sorted by the age field in ascending order.
 
-## Usage
+## Hooks
+The library offers two essential hooks: `usePaginationQuery` and `useInfinitePaginationQuery`. The `useInfinitePaginationQuery` hook specifically targets infinite scroll pagination.
 
 1. Define your API endpoint path and configure the query parameters. 
 
 For example:
-
 ```
 const queryConfig = {
-    path = '/api/users';
-    page: 1,
+    path: 'records',
+    page: 0,
     size: 10,
-    sort: 'name',
-    staleTime: 60000,
-    keepPreviousData: true,
+    sort: "age,asc",
+    staleTime: 5000,
+    gcTime: 5000
 };
 ```
+- `path`: The path to be used for the query key. This allows multiple infinite queries to be differentiated.
+- `staleTime`: The time in milliseconds before considering the data stale and refetching it. If the data is refetched within this timeframe, the cached data will be used instead.
+- `gcTime`: The time in milliseconds before garbage collecting old page data. If a page is not accessed within this timeframe, it will be removed from the cache.
+- `defaultPageParam`: The default value for the page parameter. If not specified, it defaults to 0.
+- `maxPages`: The maximum number of pages to fetch. This helps prevent infinite scrolling from fetching an excessive number of pages.
 
-2. Use the usePaginationQuery hook to fetch the paginated data from the backend:
-
-```const { data, isLoading, isError, error } = usePaginationQuery(apiPath, queryConfig);```
+2. Use the `usePaginationQuery` hook to fetch paginated data from the backend:
+```
+const { status, data, error, refetch, isLoading, isFetching, isError } = usePaginationQuery<T>(queryConfig, axiosConfig);
+```
 
 3. Render the fetched data in your React components:
-
 ```
 if (isLoading) 
     return <div>Loading...</div>
@@ -64,20 +68,18 @@ if (isError && error instanceof Error)
 if (data)
     return (
         <div>
-            {data._embedded.records.map((record: Record) => {
-                console.log(data)
-                return (
-                    <RecordCard
-                        key={record.age}
-                        name={record.name}
-                        age={record.age}
-                        address={record.address}
-                        medicalcondition={record.medicalcondition}
-                    />
-                );
-            })}
-        </div >
+            {data._embedded.records.map((record) => (
+                <RecordCard
+                    key={record.age}
+                    name={record.name}
+                    age={record.age}
+                    address={record.address}
+                    medicalcondition={record.medicalcondition}
+                />
+            ))}
+        </div>
     );
+
 ```
 
-4. Update the query parameters as needed. For example, to load the next page of results
+4. Update the query parameters as needed to load the next page of results
