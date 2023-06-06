@@ -35,7 +35,7 @@ The library offers two essential hooks: `usePaginationQuery` and `useInfinitePag
 1. Define the API endpoint path and configure the query parameters. For example:
 ```
 const queryConfig = {
-    path: 'records',
+    url: 'records',
     page: 0,
     size: 10,
     sort: "age,asc",
