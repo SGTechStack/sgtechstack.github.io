@@ -79,7 +79,7 @@ const config = {
           {
             href: 'https://github.com/SGTechStack/sgtechstack.github.io/tree/source/eds-library-documentation',
             position: 'left',
-            label: 'Examples',
+            label: 'Github',
           },
           // { to: '/blog', label: 'Blog', position: 'left' },
           // {
@@ -135,7 +135,8 @@ const config = {
       //   copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
       // },
       prism: {
-        theme: lightCodeTheme,
+        theme: require('prism-react-renderer/themes/dracula'),
+        // theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
     }),

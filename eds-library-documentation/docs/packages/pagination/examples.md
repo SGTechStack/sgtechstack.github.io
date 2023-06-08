@@ -4,16 +4,15 @@ sidebar_position: 3
 
 # Examples
 
-## usePaginationQuery
-The `usePaginationQuery` hook is used for paginated queries where you want to fetch a specific page of data. It utilizes the `useQuery` function from `@tanstack/react-query` under the hood.
-```
+## `usePaginationQuery` Hook
+Used for paginated queries to fetch a specific page of data and render the fetched data into your React components.
+```js
 import { useState } from 'react';
 import { RecordResponse } from '../record/Record';
-import { usePaginatedQuery } from '@eds-components/pagination-query';
+import { usePaginationQuery } from '@eds-componentss/pagination-query';
 
-export default function RecordResults({ recordsPerPage }: { recordsPerPage: number }) {
+export default function RecordsPage({ recordsPerPage }: { recordsPerPage: number }) {
     const [currentPage, setCurrentPage] = useState(0);
-
     const { 
       isLoading,
       isError,
@@ -23,7 +22,7 @@ export default function RecordResults({ recordsPerPage }: { recordsPerPage: numb
       data,
       refetch,
       isFetching 
-     } = usePaginatedQuery<RecordResponse>({
+     } = usePaginationQuery<RecordResponse>({
       url: "records",
       page: currentPage,
       size: recordsPerPage,
@@ -37,27 +36,23 @@ export default function RecordResults({ recordsPerPage }: { recordsPerPage: numb
     if (data)
         return (
           <div>
-            {/* Render the records list */}
             {data.pages.map((page) => (
-              // Render each page of records
+              // Render each page of records here
             ))}
-            {hasNextPage && (
-              <button onClick={fetchNextPage}>Load More</button>
-            )}
           </div>
         );
     return null;
 }
 ```
 
-## useInfinitePaginationQuery
-`useInfinitePaginationQuery` hook is similar to `usePaginationQuery` but specifically targets infinite scroll pagination. It utilizes the `useInfiniteQuery` function from `@tanstack/react-query` under the hood.
-```
+## `useInfiniteScrollQuery` Hook
+Used for infinite scroll queries to load more data into an existing set of data and render the fetched data into your React components.
+```js
 import { useState } from 'react';
 import { RecordResponse } from '../record/Record';
-import { useInfinitePaginatedQuery } from '@eds-components/pagination-query';
+import { useInfinitePaginatedQuery } from '@eds-componentss/pagination-query';
 
-export default function RecordResults({ recordsPerPage }: { recordsPerPage: number }) {
+export default function InfiniteRecordsPage({ recordsPerPage }: { recordsPerPage: number }) {
     const [currentPage, setCurrentPage] = useState(0);
 
     const { 
@@ -89,9 +84,8 @@ export default function RecordResults({ recordsPerPage }: { recordsPerPage: numb
     if (data)
         return (
           <div>
-            {/* Render the records list */}
             {data.pages.map((page) => (
-              // Render each page of records
+              // Render each page of records here
             ))}
             {hasNextPage && (
               <button onClick={fetchNextPage}>Load More</button>
