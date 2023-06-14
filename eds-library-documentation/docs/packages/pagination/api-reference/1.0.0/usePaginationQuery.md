@@ -17,6 +17,7 @@ const {
 } = usePaginationQuery<T>(
     {
         url,
+        arg,
         page,
         size,
         sort,
@@ -32,6 +33,8 @@ const {
 - `url: String`
     - **Required**
     - The server URL that will be used for the request
+- `arg: any`
+    - The parameters that will be used for the request
 - `page: number`
     - **Required**
     - `0` indexed

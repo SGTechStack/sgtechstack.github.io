@@ -14,6 +14,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "records", path = "records")
 public interface RecordsRepository extends PagingAndSortingRepository<Record, Long> {
     // Additional custom query methods can be defined here if needed
+    Page<Record> findByName(@Param("name") String name, Pageable pageable);
 }
 ```
 
@@ -21,7 +22,10 @@ public interface RecordsRepository extends PagingAndSortingRepository<Record, Lo
 
 2. Annotate the repository with `@RepositoryRestResource` and provide the desired `collectionResourceRel` and `path` values. In this example, we use "records" for both.
 
-3. With this configuration, Spring Data REST will automatically generate the expected URL format: `http://localhost:8080/records{?page,size,sort}`
+3. With this configuration, Spring Data REST will automatically generate the expected URL format: 
+    - `http://localhost:8080/records{?page,size,sort}`
+    - `http://localhost:8080/records/search/findByName{?name,page,size,sort}`
+4. Read up on Spring Data REST Projections to project only a selected fields from an entity representation.
 
 :::info custom backend configuration
 You can use the hooks as long as you configure the URL with the following params:
@@ -54,12 +58,16 @@ REACT_APP_TIMEOUT="5000" // Optional
 3. Define the API endpoint path and configure the query parameters. For example:
 ```js
 const queryConfig = {
-    url: 'records',
+    url: 'records/search/findByName',
+    arg: {
+        name: 'James'
+    },
     page: 0,
     size: 10,
     sort: 'age,asc',
     staleTime: 5000,
-    gcTime: 5000
+    gcTime: 5000,
+    retry: 3
 };
 ```
 :::tip

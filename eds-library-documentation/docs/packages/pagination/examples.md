@@ -23,12 +23,16 @@ export default function RecordsPage({ recordsPerPage }: { recordsPerPage: number
       refetch,
       isFetching 
      } = usePaginationQuery<RecordResponse>({
-      url: "records",
+      url: 'records/search/findByName',
+      arg: {
+        name: 'James'
+      },
       page: currentPage,
       size: recordsPerPage,
-      sort: "age",
+      sort: 'age',
       staleTime: 5000,
-      gcTime: 5000
+      gcTime: 5000,
+      retry: 3
     });
 
     if (isLoading) return <div>Loading...</div>
@@ -70,13 +74,14 @@ export default function InfiniteRecordsPage({ recordsPerPage }: { recordsPerPage
       isFetchingPreviousPage,
       isFetchingNextPage
      } = useInfinitePaginatedQuery<RecordResponse>({
-      url: "records",
+      url: 'records',
       size: recordsPerPage,
-      sort: "age",
+      sort: 'age',
       defaultPageParam: 0,
       maxPages: 2,
       staleTime: 5000,
-      gcTime: 1000
+      gcTime: 1000,
+      retry: 3
     });
 
     if (isLoading) return <div>Loading...</div>
