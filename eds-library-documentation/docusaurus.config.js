@@ -39,6 +39,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // Remove this to remove the "edit this page" links
           editUrl: 'https://github.com/SGTechStack/sgtechstack.github.io/tree/source/eds-library-documentation'
